@@ -1,11 +1,23 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const CopyPlugin = require("copy-webpack-plugin");
 
 module.exports = (env, args) => ({
   entry: path.resolve(__dirname, "./src/index.tsx"),
   mode: "development",
   module: {
     rules: [
+      {
+        test: /\.svg$/,
+        use: [
+          {
+            loader: "@svgr/webpack",
+            options: {
+              memo: true,
+            },
+          },
+        ],
+      },
       {
         test: /\.js$/,
         exclude: /node_modules/,
@@ -30,8 +42,20 @@ module.exports = (env, args) => ({
   output: {
     path: path.resolve(__dirname, "./dist"),
     filename: "bundle.js",
+    clean: true,
   },
   plugins: [
+    new CopyPlugin({
+      patterns: [
+        {
+          from: path.resolve(__dirname, "./src/assets"),
+          to: path.resolve(__dirname, "./dist/assets"),
+        },
+      ],
+      options: {
+        concurrency: 100,
+      },
+    }),
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, "./src/index.html"),
       hash: true,
@@ -42,6 +66,6 @@ module.exports = (env, args) => ({
   devServer: {
     port: 3000,
     hot: true,
-    open: true,
+    // open: true,
   },
 });

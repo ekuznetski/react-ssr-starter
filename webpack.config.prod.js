@@ -3,12 +3,24 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const BundleAnalyzerPlugin =
   require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const CopyPlugin = require("copy-webpack-plugin");
 
 module.exports = (env, args) => ({
   entry: path.resolve(__dirname, "./src/index.tsx"),
   mode: "production",
   module: {
     rules: [
+      {
+        test: /\.svg$/,
+        use: [
+          {
+            loader: "@svgr/webpack",
+            options: {
+              memo: true,
+            },
+          },
+        ],
+      },
       {
         test: /\.js$/,
         exclude: /node_modules/,
@@ -33,14 +45,26 @@ module.exports = (env, args) => ({
   output: {
     path: path.resolve(__dirname, "./dist"),
     filename: "bundle.js",
+    clean: true,
   },
   plugins: [
-    new BundleAnalyzerPlugin(),
-    new MiniCssExtractPlugin(),
+    new CopyPlugin({
+      patterns: [
+        {
+          from: path.resolve(__dirname, "./src/assets"),
+          to: path.resolve(__dirname, "./dist/assets"),
+        },
+      ],
+      options: {
+        concurrency: 100,
+      },
+    }),
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, "./src/index.html"),
       hash: true,
       filename: "index.html",
     }),
+    new BundleAnalyzerPlugin(),
+    new MiniCssExtractPlugin(),
   ],
 });

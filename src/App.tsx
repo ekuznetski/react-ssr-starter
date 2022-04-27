@@ -1,5 +1,6 @@
 import React from "react";
 import { hot } from "react-hot-loader/root";
+import SVG from "./assets/tux.svg";
 import "./styles.scss";
 
 const App = () => {
@@ -16,7 +17,18 @@ const App = () => {
     return message;
   }
 
-  return <h2 className="test">{displayCount(`Count: ${count}`)}</h2>;
+  return (
+    <>
+      <h2 className="test">{displayCount(`Count: ${count}`)}</h2>
+      <SVG />
+      <br />
+      <hr />
+      <img src="assets/tux.svg" alt="test" />
+      <br />
+      <hr />
+      <img src="assets/image.png" alt="test" />
+    </>
+  );
 };
 
 export default hot(App);
