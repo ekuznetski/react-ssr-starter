@@ -1,5 +1,6 @@
 import React from "react";
 import { hot } from "react-hot-loader/root";
+import "./styles.scss";
 
 const App = () => {
   const [count, setCount] = React.useState<number>(0);

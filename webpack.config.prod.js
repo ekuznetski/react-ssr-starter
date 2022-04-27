@@ -1,9 +1,12 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const BundleAnalyzerPlugin =
+  require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = (env, args) => ({
   entry: path.resolve(__dirname, "./src/index.tsx"),
-  mode: "development",
+  mode: "production",
   module: {
     rules: [
       {
@@ -15,7 +18,7 @@ module.exports = (env, args) => ({
       },
       {
         test: /\.(s(a|c)ss)$/,
-        use: ["style-loader", "css-loader", "sass-loader"],
+        use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"],
       },
       {
         test: /\.(ts|tsx)?$/,
@@ -32,16 +35,12 @@ module.exports = (env, args) => ({
     filename: "bundle.js",
   },
   plugins: [
+    new BundleAnalyzerPlugin(),
+    new MiniCssExtractPlugin(),
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, "./src/index.html"),
       hash: true,
       filename: "index.html",
     }),
   ],
-  devtool: "eval-source-map",
-  devServer: {
-    port: 3000,
-    hot: true,
-    open: true,
-  },
 });
