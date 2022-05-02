@@ -1,4 +1,4 @@
-# Reference app template
+# ssr template
 
 
 `build:ssr` - build **just** _server.js_ file for SSR,
