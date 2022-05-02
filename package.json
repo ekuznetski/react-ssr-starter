@@ -6,10 +6,12 @@
   "scripts": {
     "build:ssr": "webpack --config ./webpack.config.ssr.js",
     "build:prod:client": "webpack --config ./webpack.config.prod.js",
-    "build:watch": "webpack --config ./webpack.config.ssr.js -w",
+    "build:ssr:watch": "webpack --config ./webpack.config.ssr.js -w",
+    "build:client:watch": "webpack --config ./webpack.config.prod.js -w",
     "dev": "webpack-dev-server",
-    "dev:ssr": "concurrently \"yarn run build:watch\" \"nodemon ./dist/server.js\"",
-    "buildAndStart": "yarn run build:prod:client && yarn run build:ssr && node ./dist/server.js"
+    "dev:ssr": "concurrently \"yarn run build:ssr:watch\" \"yarn run build:client:watch\" \"nodemon ./dist/server.js\"",
+    "start": "node ./dist/server.js",
+    "buildAndStart": "yarn run build:prod:client && yarn run build:ssr && yarn run start"
   },
   "dependencies": {
     "express": "^4.18.0",
