@@ -23,10 +23,10 @@ const App = () => {
       <SVG />
       <br />
       <hr />
-      <img src="assets/tux.svg" alt="test" />
+      <img src="./assets/tux.svg" alt="test" />
       <br />
       <hr />
-      <img src="assets/image.png" alt="test" />
+      <img src="./assets/image.png" alt="test" />
     </>
   );
 };

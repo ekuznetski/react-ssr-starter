@@ -1,11 +1,12 @@
 import React from "react";
-import { render } from "react-dom";
+import { hydrateRoot } from "react-dom/client";
 import App from "./App";
 
 const root = document.getElementById("root");
-render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  root
-);
+root &&
+  hydrateRoot(
+    root,
+    <React.StrictMode>
+      <App />
+    </React.StrictMode>
+  );

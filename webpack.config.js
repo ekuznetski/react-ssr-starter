@@ -2,7 +2,7 @@ const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
 
-module.exports = (env, args) => ({
+module.exports = () => ({
   entry: path.resolve(__dirname, "./src/index.tsx"),
   mode: "development",
   module: {
@@ -37,7 +37,7 @@ module.exports = (env, args) => ({
     ],
   },
   resolve: {
-    extensions: [".ts", ".js", ".json", ".tsx"],
+    extensions: [".tsx", ".ts", ".js", ".json", ".sass", ".scss", ".css"],
   },
   output: {
     path: path.resolve(__dirname, "./dist"),

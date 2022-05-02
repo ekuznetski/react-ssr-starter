@@ -1,13 +1,17 @@
 const path = require("path");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const BundleAnalyzerPlugin =
-  require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
+const nodeExternals = require("webpack-node-externals");
+
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const CopyPlugin = require("copy-webpack-plugin");
 
 module.exports = () => ({
-  entry: path.resolve(__dirname, "./src/index.tsx"),
+  entry: path.resolve(__dirname, "./src/server.tsx"),
   mode: "production",
+  target: "node",
+  externals: [nodeExternals()],
+  output: {
+    path: __dirname + "/dist",
+    filename: "server.js",
+  },
   module: {
     rules: [
       {
@@ -42,29 +46,5 @@ module.exports = () => ({
   resolve: {
     extensions: [".tsx", ".ts", ".js", ".json", ".sass", ".scss", ".css"],
   },
-  output: {
-    path: path.resolve(__dirname, "./dist"),
-    filename: "bundle.js",
-    clean: true,
-  },
-  plugins: [
-    new CopyPlugin({
-      patterns: [
-        {
-          from: path.resolve(__dirname, "./src/assets"),
-          to: path.resolve(__dirname, "./dist/assets"),
-        },
-      ],
-      options: {
-        concurrency: 100,
-      },
-    }),
-    new HtmlWebpackPlugin({
-      template: path.resolve(__dirname, "./src/index.html"),
-      hash: true,
-      filename: "index.html",
-    }),
-    // new BundleAnalyzerPlugin(),
-    new MiniCssExtractPlugin(),
-  ],
+  plugins: [new MiniCssExtractPlugin()],
 });
